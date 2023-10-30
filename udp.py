@@ -20,7 +20,7 @@ def server(port):
         
 def client(port):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    message = input('here is the first message in lowercase')
+    message = input('input your message in lowercase: ')
     data = message.encode('ascii')
     s.sendto(data, ('127.0.0.1', port))
     print('The OS assigned the address {} to me'.format(s.getsockname())) 
@@ -28,11 +28,11 @@ def client(port):
     reply = data.decode('ascii')
     print('The server {} replied with {!r}'.format(address, reply))
     
-    if __name__ == '__main__':
-        funcs = {'client': client, 'server': server}
-        parser = argparse.ArgumentParser(description='UDP client and server')
-        parser.add_argument('functions', choices=funcs, help='client or server')
-        parser.add_argument('-p', metavar='PORT', type=int, default=3000, help='UDP port (default 3000)')
-        args = parser.parse_args()
-        function = funcs[args.functions]
-        function(args.p)
+if __name__ == '__main__':
+    funcs = {'client': client, 'server': server}
+    parser = argparse.ArgumentParser(description='UDP client and server')
+    parser.add_argument('functions', choices=funcs, help='client or server')
+    parser.add_argument('-p', metavar='PORT', type=int, default=3000, help='UDP port (default 3000)')
+    args = parser.parse_args()
+    function = funcs[args.functions]
+    function(args.p)
